@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="profile-section">
+<h2>Profile: {{ user.username }}</h2>
+<h3>Your Anime Progress</h3>
+<ul>
+    {% for p in progress %}
+        <li>
+            <strong>{{ p.anime.title }}</strong>: {{ p.watched_episodes }}/{{ p.anime.episodes_count }} episodes watched (Status: {{ p.status }})
+        </li>
+    {% empty %}
+        <li>No progress tracked yet.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'logout' %}" class="btn">Logout</a>
+</div>
+{% endblock %}

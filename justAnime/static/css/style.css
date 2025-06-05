@@ -1,0 +1,464 @@
+:root {
+  --bg: #181a1b;
+  --card: #23262a;
+  --accent: #a85f40;
+  --accent-light: #ffb47e;
+  --text: #f4f4f4;
+  --text-dark: #23262a;
+  --header: #23262a;
+  --footer: #23262a;
+  --tag: #a85f40;
+  --tag-text: #fff;
+}
+html.light {
+  --bg: #f4f4f4;
+  --card: #fff;
+  --accent: #a85f40;
+  --accent-light: #ffb47e;
+  --text: #23262a;
+  --header: #fff;
+  --footer: #fff;
+  --tag: #ffb47e;
+  --tag-text: #23262a;
+}
+html.pastel {
+  --bg: #fdf6f0;
+  --card: #fff7ed;
+  --accent: #e07a5f;
+  --accent-light: #ffe5d0;
+  --text: #5a4a42;
+  --header: #ffe5d0;
+  --footer: #ffe5d0;
+  --tag: #ffe5d0;
+  --tag-text: #e07a5f;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', 'Noto Sans', 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+  transition: background 0.3s, color 0.3s;
+}
+header, footer {
+  background: var(--header);
+  color: var(--text);
+  text-align: center;
+  padding: 1.5rem 1rem;
+  font-weight: 600;
+  font-size: 1.3rem;
+  border-bottom: 2px solid #3b3f46;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: background 0.3s, color 0.3s;
+}
+footer {
+  border-top: 2px solid #3b3f46;
+  font-size: 1rem;
+  color: #aaa;
+  margin-top: 2rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.anime-card {
+  background: var(--card);
+  color: var(--text);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  padding: 1.5rem 1rem 1rem 1rem;
+  width: clamp(220px, 25vw, 320px);
+  min-width: 220px;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.3s, color 0.3s;
+  animation: fadeIn 0.7s;
+  margin: 0;
+}
+.anime-card:hover {
+  transform: translateY(-6px) scale(1.03) rotate(-1deg);
+  box-shadow: 0 0 32px 8px var(--accent-light), 0 8px 32px var(--accent-light, #ffb47e);
+  background: var(--card);
+  color: var(--text);
+}
+.anime-card img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  transition: box-shadow 0.2s;
+}
+.anime-card h2 {
+  margin: 0.5rem 0 0.5rem 0;
+  font-size: 1.3rem;
+  color: var(--accent-light);
+  text-align: center;
+  font-weight: 700;
+}
+.anime-card h2, .anime-card p, .anime-card .tag {
+  color: var(--text) !important;
+}
+.tags {
+  margin-bottom: 0.5rem;
+}
+.tag {
+  display: inline-block;
+  background: var(--tag);
+  color: var(--tag-text);
+  border-radius: 6px;
+  padding: 0.2rem 0.7rem;
+  margin: 0 0.2rem 0.2rem 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+.btn, .btn-primary, .btn-warning, .btn-danger, .btn-sm {
+  display: inline-block;
+  padding: 0.5rem 1.1rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 0.2rem 0.2rem 0.2rem 0;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+  outline: none;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background: var(--accent-light);
+  color: var(--text-dark);
+  box-shadow: 0 0 0 2px var(--accent-light);
+}
+.btn-warning {
+  background: var(--accent-light);
+  color: var(--text-dark);
+}
+.btn-warning:hover, .btn-warning:focus {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.btn-danger {
+  background: #e74c3c;
+  color: #fff;
+}
+.btn-danger:hover, .btn-danger:focus {
+  background: #c0392b;
+  box-shadow: 0 0 0 2px #e74c3c;
+}
+.btn-sm {
+  font-size: 0.95rem;
+  padding: 0.3rem 0.7rem;
+}
+button:disabled, .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.admin-controls {
+  margin-top: 0.7rem;
+  display: flex;
+  gap: 0.5rem;
+}
+form {
+  background: var(--card);
+  padding: 1.2rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  margin: 1.5rem auto;
+  max-width: 420px;
+  transition: background 0.3s, color 0.3s;
+}
+form input, form select, form textarea {
+  width: 100%;
+  max-width: 100%;
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: none;
+  background: var(--card);
+  color: var(--text);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent-light);
+  background: var(--bg);
+  color: var(--text);
+}
+form button {
+  width: 100%;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 0.7rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+}
+form button:hover, form button:focus {
+  background: var(--accent-light);
+  color: var(--text-dark);
+  box-shadow: 0 0 0 2px var(--accent-light);
+}
+.comments-section {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem auto;
+  max-width: 700px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  transition: background 0.3s, color 0.3s;
+}
+.comment {
+  background: var(--card);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.10);
+  transition: background 0.2s, color 0.2s;
+}
+.comment strong {
+  color: var(--accent-light);
+}
+::-webkit-scrollbar {
+  width: 10px;
+  background: var(--card);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 8px;
+}
+
+/* --- SEARCH FORM MODERN FIX --- */
+.search-form {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+}
+.search-form select,
+.search-form input[type="text"] {
+  flex: 1 1 0;
+  min-width: 90px;
+  max-width: 200px;
+  box-sizing: border-box;
+}
+.search-form button {
+  flex: 0 0 90px;
+  height: 40px;
+  padding: 0 1.2rem;
+  font-size: 1rem;
+}
+@media (max-width: 600px) {
+  .search-form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.7rem;
+  }
+  .search-form select,
+  .search-form input[type="text"] {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    flex: 1 1 100%;
+  }
+  .search-form button {
+    width: 100%;
+    height: 44px;
+  }
+}
+/* --- END SEARCH FORM MODERN FIX --- */
+
+.anime-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin: 2rem 0;
+  transition: gap 0.3s;
+}
+@media (max-width: 600px) {
+  .anime-list {
+    gap: 1rem;
+  }
+  .anime-card {
+    width: 100%;
+    min-width: 0;
+    max-width: 340px;
+  }
+  .search-form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.7rem;
+  }
+  form {
+    padding: 1rem 0.5rem;
+    max-width: 98vw;
+  }
+}
+
+.anime-detail-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 2.5rem auto;
+  max-width: 900px;
+}
+.anime-detail-image {
+  flex: 0 0 320px;
+  max-width: 320px;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.anime-detail-image img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+}
+.anime-detail-info {
+  flex: 1 1 340px;
+  min-width: 260px;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--card);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+}
+.tags-centered {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+}
+.progress-block {
+  width: 100%;
+  margin: 1.2rem 0 1.5rem 0;
+  text-align: center;
+}
+.progress-bar-outer {
+  width: 100%;
+  background: #3336;
+  border-radius: 8px;
+  height: 32px;
+  margin-bottom: 0.7rem;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.10);
+}
+.progress-bar-inner {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent) 60%, var(--accent-light));
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px 0 0 8px;
+  transition: width 0.4s cubic-bezier(.4,1.4,.6,1);
+  box-shadow: 0 0 8px var(--accent-light, #ffb47e);
+}
+.progress-bar-label {
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 1px 4px #000a;
+}
+.progress-form-inline {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 900px) {
+  .anime-detail-flex {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .anime-detail-image img {
+    height: 260px;
+  }
+  .anime-detail-info {
+    padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+  }
+}
+
+/* Темные, светлые и пастельные темы для body через html-класс */
+html.dark body {
+  background: #181a1b;
+  color: #f4f4f4;
+}
+html.light body {
+  background: #f4f4f4;
+  color: #23262a;
+}
+html.pastel body {
+  background: #fdf6f0;
+  color: #5a4a42;
+}
+
+html.dark header, html.dark footer {
+  background: #23262a;
+  color: #f4f4f4;
+}
+html.light header, html.light footer {
+  background: #fff;
+  color: #23262a;
+}
+html.pastel header, html.pastel footer {
+  background: #ffe5d0;
+  color: #5a4a42;
+}
+html.dark a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s, text-decoration 0.2s;
+}
+html.dark a:hover, a:focus {
+  text-decoration: underline;
+}
+
+html.light a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s, text-decoration 0.2s;
+}
+html.light a:hover, a:focus {
+  text-decoration: underline;
+}
+html.pastel a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s, text-decoration 0.2s;
+}
+html.pastel a:hover, a:focus {
+  text-decoration: underline;
+}

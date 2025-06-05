@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Anime Archive{% endblock %}</title>
+
+  <!-- Подключи tailwind, bootstrap или своё -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <script>
+    const themes = ["dark", "light", "pastel"];
+    function getCurrentTheme() {
+      const html = document.documentElement;
+      for (let t of themes) if (html.classList.contains(t)) return t;
+      return null;
+    }
+    function switchTheme() {
+      const html = document.documentElement;
+      let current = getCurrentTheme();
+      if (!current) {
+        html.classList.add('dark');
+        current = 'dark';
+      }
+      let idx = themes.indexOf(current);
+      html.classList.remove(current);
+      let next = themes[(idx + 1) % themes.length];
+      html.classList.add(next);
+      localStorage.setItem('theme', next);
+    }
+    // On load, restore theme
+    (function() {
+      const html = document.documentElement;
+      const saved = localStorage.getItem('theme');
+      html.classList.remove('dark','light','pastel');
+      if (saved && themes.includes(saved)) {
+        html.classList.add(saved);
+      } else {
+        html.classList.add('dark');
+      }
+    })();
+  </script>
+</head>
+
+<body class="site-body">
+
+  <button class="btn btn-primary" style="position:fixed;top:10px;right:10px;z-index:1000;" onclick="switchTheme()">Сменить тему</button>
+
+  <header>
+    <div class=>
+      <h1 >
+        <a href="{% url 'anime_list' %}">Anime Archive</a>
+      </h1>
+      <nav>
+        <a href="#">Поиск</a>
+        <a href="#">О проекте</a>
+      </nav>
+    </div>
+    {% if user.is_authenticated %}
+      <p class = "username" >Привет, {{ user.username }} | <a href="{% url 'profile' %}">Профиль</a> | <a href="{% url 'logout' %}">Выйти</a>
+      {% if user.is_staff %}| <a href="{% url 'anime_list' %}">Управление аниме</a>{% endif %}
+      </p>
+    {% else %}
+      <p><a href="{% url 'login' %}">Войти</a> | <a href="{% url 'register' %}">Регистрация</a></p>
+    {% endif %}
+
+  </header>
+
+<form method="get" action="{% url 'anime_list' %}" class="search-form">
+  <select name="genre">
+    <option value="">Жанр</option>
+    {% for tag in all_tags %}
+      <option value="{{ tag.name }}" {% if request.GET.genre == tag.name %}selected{% endif %}>
+        {{ tag.name }}
+      </option>
+    {% endfor %}
+  </select>
+
+  <select name="year">
+    <option value="">Год</option>
+    {% for y in years %}
+      <option value="{{ y }}" {% if request.GET.year == y %}selected{% endif %}>{{ y }}</option>
+    {% endfor %}
+  </select>
+
+  <input type="text" name="title" placeholder="Название аниме..." value="{{ request.GET.title|default_if_none:'' }}">
+  <button type="submit">Искать</button>
+</form>
+
+
+  <main class="site-main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    © {{ now|date:"Y" }} Anime Archive. Нет Прав.
+  </footer>
+
+</body>
+</html>
+
+
+

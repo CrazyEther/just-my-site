@@ -1,0 +1,12 @@
+<form method="POST" action="{% url 'update_progress' slug=anime.slug %}">
+  {% csrf_token %}
+  <div class="progress-bar">
+    <p>Просмотрено: {{ progress.watched_episodes }} / {{ anime.total_episodes }}</p>
+    
+    <button type="submit" name="action" value="add_one">+1 серия</button>
+
+    <input type="number" name="set_episode" min="0" max="{{ anime.total_episodes }}" placeholder="Установить серию">
+
+    <button type="submit" name="action" value="set_episode">Установить</button>
+  </div>
+</form>

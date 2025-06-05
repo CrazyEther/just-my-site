@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="anime-detail-flex">
+  <div class="anime-detail-image">
+    <img src="{{ anime.image.url }}" alt="{{ anime.title }}">
+  </div>
+  <div class="anime-detail-info">
+    <h1>{{ anime.title }}</h1>
+    <div class="tags tags-centered">
+      {% for genre in anime.genres.all %}
+        <span class="tag">{{ genre.name }}</span>
+      {% endfor %}
+    </div>
+    <p>{{ anime.description }}</p>
+    {% if user.is_authenticated %}
+    <div class="progress-block">
+      <h3>Мой прогресс</h3>
+      {% if progress %}
+        {% widthratio progress.watched_episodes anime.episodes_count 100 as percent %}
+        <div class="progress-bar-outer">
+          <div class="progress-bar-inner" style="width: {{ percent }}% "><span class="progress-bar-label">{{ progress.watched_episodes }} / {{ anime.episodes_count }}</span></div>
+        </div>
+        <form method="POST" action="{% url 'update_progress' slug=anime.slug %}" class="progress-form-inline">
+          {% csrf_token %}
+          <button type="submit" name="action" value="add_one">+1 серия</button>
+        </form>
+        <form method="POST" action="{% url 'update_progress' slug=anime.slug %}" class="progress-form-inline">
+          {% csrf_token %}
+          <input type="number" name="set_episode" min="0" max="{{ anime.episodes_count }}" required>
+          <button type="submit" name="action" value="set_episode">Установить</button>
+        </form>
+      {% else %}
+        <p>Ты ещё не начал смотреть это аниме.</p>
+        <form method="POST" action="{% url 'update_progress' slug=anime.slug %}">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="start">
+          <button type="submit">Начать просмотр</button>
+        </form>
+      {% endif %}
+    </div>
+    {% else %}
+      <p><a href="{% url 'login' %}">Войди</a>, чтобы отслеживать прогресс.</p>
+    {% endif %}
+    <a href="{% url 'anime_list' %}" class="back-link">← Назад к списку</a>
+  </div>
+</div>
+
+<div class="comments-section">
+  <h2>Комментарии</h2>
+  {% for comment in comments %}
+    <div class="comment">
+      <strong>{{ comment.user.username }}</strong> <small>{{ comment.created_at|date:"Y-m-d H:i" }}</small>
+      <p>{{ comment.text }}</p>
+      {% if user.is_staff %}
+        <form method="post" action="{% url 'delete_comment' comment.id %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit">Удалить</button>
+        </form>
+      {% endif %}
+    </div>
+  {% empty %}
+    <p>Комментариев пока нет.</p>
+  {% endfor %}
+
+  {% if user.is_authenticated %}
+    <form method="post" action="{% url 'add_comment' anime.slug %}">
+      {% csrf_token %}
+      {{ comment_form.as_p }}
+      <button type="submit">Добавить комментарий</button>
+    </form>
+  {% else %}
+    <p><a href="{% url 'login' %}">Войдите</a>, чтобы оставить комментарий.</p>
+  {% endif %}
+</div>
+
+{% endblock %}

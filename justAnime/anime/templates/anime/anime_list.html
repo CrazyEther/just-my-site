@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="anime-list">
+  {% if user.is_staff %}
+    <a href="{% url 'add_anime' %}" class="btn btn-primary">Добавить аниме</a>
+  {% endif %}
+  {% for anime in animes %}
+    <div class="anime-card">
+      <a href="{{ anime.get_absolute_url }}">
+        <img src="{{ anime.image.url }}" alt="{{ anime.title }}">
+        <h2>{{ anime.title }}</h2>
+      </a>
+      <div class="tags">
+        {% for genre in anime.genres.all %}
+          <span class="tag">{{ genre.name }}</span>
+        {% endfor %}
+      </div>
+      {% if user.is_staff %}
+        <div class="admin-controls">
+          <a href="{% url 'edit_anime' anime.slug %}" class="btn btn-warning btn-sm">Редактировать</a>
+          <form method="post" action="{% url 'delete_anime' anime.slug %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Удалить аниме?');">Удалить</button>
+          </form>
+        </div>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
